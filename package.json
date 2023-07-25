@@ -1,0 +1,13 @@
+
+  {
+    "name": "towers",
+    "version": "1.0.0",
+    "scripts": {
+      "build": "npm run setup:server",
+      "setup:app": "npm run setup:server && npm run setup:client",
+      "setup:client": "cd towers.client && npm i",
+      "setup:server": "cd towers && npm i",
+      "start": "node towers/index.js"
+    }
+  }
+  
