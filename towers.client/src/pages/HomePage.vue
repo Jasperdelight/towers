@@ -1,19 +1,54 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 bg-white rounded elevation-3">
-      <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo"
-        class="rounded-circle">
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
-    </div>
+<div class="container-fluid">
+  <section class="row">
+  <div class="col-md-12"> Tower Tickets</div>
+</section>
+<section class="row">
+  
+  <div class="col-md-2 col-4"><button>All</button></div>
+<div class="col-md-2 col-4"><button>Expos</button></div>
+<div class="col-md-2 col-4"><button>Conventions</button></div>
+<div class="col-md-2 col-4"><button>Exhibits</button></div>
+<div class="col-md-2 col-4"><button>Sports</button></div>
+<div class="col-md-2 col-4"><button>Concerts</button></div>
+</section>
+
+<section class="row">
+  <div v-for="tower in towers" :key="tower.id" class="col-md-3 col-12 bg-secondary pb-2">
+    <TowerCard :tower="tower"/>
   </div>
+</section>
+
+</div>
+
+
 </template>
 
 <script>
+import { computed, onMounted } from 'vue'
+import { logger } from '../utils/Logger.js';
+import Pop from '../utils/Pop.js';
+import {towersService} from '../services/TowersService.js'
+import { AppState } from '../AppState.js';
 export default {
   setup() {
-    return {}
+
+    async function getTowers(){
+      try{
+          await towersService.getTowers()
+      } catch(error) {
+          Pop.error(error.message);
+          logger.log(error);
+      }
+    }
+
+    onMounted(()=> {
+      getTowers()
+    })
+    return {
+    towers: computed(()=> AppState.towers)
+
+    }
   }
 }
 </script>
