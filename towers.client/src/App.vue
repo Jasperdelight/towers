@@ -80,11 +80,11 @@
 import { computed, ref } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
-import Pop from 'utils/Pop.js';
-import { logger } from 'utils/Logger.js';
+import Pop from './utils/Pop.js';
+import { logger } from './utils/Logger.js';
 import { useRouter } from 'vue-router';
 import { Modal } from 'bootstrap';
-import {towersService} from 'services/TowersService.js'
+import {towersService} from './services/TowersService.js'
 export default {
   setup() {
     const editable = ref({})
@@ -100,7 +100,7 @@ export default {
             const tower = await towersService.createTower(towerData)
           editable.value = {}
           
-          Modal.getOrCreateInstance('#exampleModal').hide
+          Modal.getOrCreateInstance('#exampleModal').hide()
           router.push({ name: 'Tower', params: {eventId: tower.id}})
           } catch(error) {
             Pop.error(error.message);
