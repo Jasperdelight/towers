@@ -18,12 +18,12 @@ class TowersService {
     const tower = new Tower(res.data)
     AppState.activeTower = tower
   }
-  async attendTower(profileData) {
-    const res = await api.post('api/tickets', profileData)
-    logger.log('attending?', res.data)
-    const newTicket = new Ticket(res.data)
-    AppState.tickets.unshift(newTicket)
 
+  async createTower(towerData) {
+    const res = await api.post(`api/events`, towerData)
+    logger.log('new event', res.data)
+    const tower = new Tower(res.data)
+    return tower
   }
 }
 export const towersService = new TowersService()

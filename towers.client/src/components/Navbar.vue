@@ -21,7 +21,7 @@
         </li>
       </ul>
           <!-- Modal Button -->
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Create Tower
 </button>
       <!-- LOGIN COMPONENT HERE -->

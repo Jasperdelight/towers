@@ -8,15 +8,19 @@
       <h2> {{activeTower.name}}</h2>
       <p>{{activeTower.description}}</p>
       <h4>Spots Left: {{ ticketsLeft}}</h4>
-      <button @click="attendTower()" class="btn btn-warning">Attend</button>
+      <button v-if="!isAttending" @click="attendTower()" class="btn btn-warning">Attend</button>
+      <button v-if="isAttending" @click="unAttendTower()" class="btn btn-danger">Cancel</button>
     </div>
   </section>
 
   <h5 class="mb-0">Who's Going</h5>
   <section class="row bg-secondary">
-    <div v-for="ticket in tickets" :key="ticket.id" class="col-12">
+    <div class="col-12 d-flex">
+
+      <div v-for="ticket in tickets" :key="ticket.id" class="">
       <img class="ticket-img" :src="ticket.profile.picture" :alt="ticket.profile.name" :title="ticket.profile.name">
     </div>
+      </div>
   </section>
 
   <section class="row">
@@ -108,7 +112,10 @@ export default {
       tickets: computed(()=> AppState.tickets),
       comments: computed(()=> AppState.comments),
       ticketsLeft: computed(()=> AppState.activeTower.capacity - AppState.activeTower.ticketCount),
-
+      account: computed(()=> AppState.account),
+      isAttending: computed(()=> {
+        return AppState.tickets.find(t => t.accountId == AppState.account.id)
+      }),
 
       async createComment(){
         try{
@@ -126,13 +133,23 @@ export default {
           const towerId = route.params.eventId
         const profileData = {}
         profileData.eventId = towerId
-        await towersService.attendTower(profileData)
+        await ticketsService.attendTower(profileData)
         AppState.activeTower.ticketCount--
         } catch(error) {
             Pop.error(error.message);
             logger.log(error);
         }
-
+      },
+      async unAttendTower(){
+        try{
+            const ticketToRemove = AppState.tickets.find(t => t.accountId == AppState.account.id)
+            const profileId = ticketToRemove.id
+            await ticketsService.unAttendTower(profileId)
+            AppState.activeTower.ticketCount++
+        } catch(error) {
+            Pop.error(error.message);
+            logger.log(error);
+        }
       }
     }
   }
