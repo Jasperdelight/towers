@@ -1,4 +1,5 @@
 import { AppState } from "../AppState.js"
+import { Ticket } from "../models/Ticket.js"
 import { Tower } from "../models/Tower.js"
 import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
@@ -16,6 +17,13 @@ class TowersService {
     logger.log('got event', res.data)
     const tower = new Tower(res.data)
     AppState.activeTower = tower
+  }
+  async attendTower(profileData) {
+    const res = await api.post('api/tickets', profileData)
+    logger.log('attending?', res.data)
+    const newTicket = new Ticket(res.data)
+    AppState.tickets.unshift(newTicket)
+
   }
 }
 export const towersService = new TowersService()

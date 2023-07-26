@@ -9,6 +9,9 @@
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
+
+    
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         <li>
@@ -17,6 +20,10 @@
           </router-link>
         </li>
       </ul>
+          <!-- Modal Button -->
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+  Create Tower
+</button>
       <!-- LOGIN COMPONENT HERE -->
       <Login />
     </div>

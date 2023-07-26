@@ -5,12 +5,12 @@
 </section>
 <section class="row">
   
-  <div class="col-md-2 col-4"><button>All</button></div>
-<div class="col-md-2 col-4"><button>Expos</button></div>
-<div class="col-md-2 col-4"><button>Conventions</button></div>
-<div class="col-md-2 col-4"><button>Exhibits</button></div>
-<div class="col-md-2 col-4"><button>Sports</button></div>
-<div class="col-md-2 col-4"><button>Concerts</button></div>
+  <div class="col-md-2 col-4" @click="filterBy = ''"><button>All</button></div>
+<div class="col-md-2 col-4" @click="filterBy = 'concert'" ><button>Concerts</button></div>
+<div class="col-md-2 col-4" @click="filterBy = 'convention'"><button>Conventions</button></div>
+<div class="col-md-2 col-4" @click="filterBy = 'digital'"><button>Digitals</button></div>
+<div class="col-md-2 col-4" @click="filterBy='sport'"><button>Sports</button></div>
+<div class="col-md-2 col-4" @click="filterBy ='misc'"><button>Misc</button></div>
 </section>
 
 <section class="row">
@@ -25,14 +25,14 @@
 </template>
 
 <script>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 import {towersService} from '../services/TowersService.js'
 import { AppState } from '../AppState.js';
 export default {
   setup() {
-
+    const filterBy = ref('')
     async function getTowers(){
       try{
           await towersService.getTowers()
@@ -46,7 +46,14 @@ export default {
       getTowers()
     })
     return {
-    towers: computed(()=> AppState.towers)
+      filterBy,
+    towers: computed(()=> {
+      if(filterBy.value == ''){
+        return AppState.towers
+      } else{
+        return AppState.towers.filter(t => t.type == filterBy.value)
+      }
+    })
 
     }
   }
