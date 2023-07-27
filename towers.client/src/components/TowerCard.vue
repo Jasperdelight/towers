@@ -1,12 +1,15 @@
 <template>
-  <div class="row">
+  <div class="row text-center">
    
-    <div  class="col-12">  <span class="text-danger" v-if="tower.isCanceled == true"> Canceled</span> {{ tower.name }} </div>
+    <div  class="col-12 fs-4">  <span class="text-danger" v-if="tower.isCanceled == true"> Canceled</span> {{ tower.name }} </div>
     <router-link :to="{ name: 'Tower', params: { eventId: tower.id }}">
-      <div class="col-12">
-        <img v-if="tower.isCanceled == false" class="img-fluid" :src="tower.coverImg" alt="">
-        <img v-if="tower.isCanceled == true" class="img-fluid canceled-img" :src="tower.coverImg" alt="">
+      <section class="row">
+
+        <div class="col-12 pb-2">
+        <img v-if="tower.isCanceled == false" class="img-fluid img" :src="tower.coverImg" alt="">
+        <img v-if="tower.isCanceled == true" class="img-fluid img canceled-img" :src="tower.coverImg" alt="">
       </div>
+    </section>
     </router-link>
   </div>
 </template>
@@ -38,4 +41,13 @@ export default {
         -ms-filter: grayscale(100%);
             filter: grayscale(100%);
 }
+
+.img {
+      height: 20vh;
+      width: 20vh;
+      width: 100%;
+      
+      object-fit: contain;
+      object-position: center;
+    }
 </style>

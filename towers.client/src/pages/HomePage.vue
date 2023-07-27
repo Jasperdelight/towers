@@ -5,16 +5,16 @@
 </section>
 <section class="row">
   
-  <div class="col-md-2 col-4" @click="filterBy = ''"><button class="btn btn-info">All</button></div>
-<div class="col-md-2 col-4" @click="filterBy = 'concert'" ><button class="btn btn-info">Concerts</button></div>
-<div class="col-md-2 col-4" @click="filterBy = 'convention'"><button class="btn btn-info">Conventions</button></div>
-<div class="col-md-2 col-4" @click="filterBy = 'digital'"><button class="btn btn-info">Digitals</button></div>
-<div class="col-md-2 col-4" @click="filterBy='sport'"><button class="btn btn-info">Sports</button></div>
-<div class="col-md-2 col-4" @click="filterBy ='misc'"><button class="btn btn-info">Misc</button></div>
+  <div class="col-md-2 col-4" @click="filterBy = ''"><button class="btn secondary-color text-white">All</button></div>
+<div class="col-md-2 col-4" @click="filterBy = 'concert'" ><button class="btn secondary-color text-white">Concerts</button></div>
+<div class="col-md-2 col-4" @click="filterBy = 'convention'"><button class="btn secondary-color text-white">Conventions</button></div>
+<div class="col-md-2 col-4" @click="filterBy = 'digital'"><button class="btn secondary-color text-white">Digitals</button></div>
+<div class="col-md-2 col-4" @click="filterBy='sport'"><button class="btn secondary-color text-white">Sports</button></div>
+<div class="col-md-2 col-4" @click="filterBy ='misc'"><button class="btn secondary-color text-white">Misc</button></div>
 </section>
 
 <section class="row justify-content-center">
-  <div v-for="tower in towers" :key="tower.id" class="col-md-3 col-12 bg-secondary card m-4">
+  <div v-for="tower in towers" :key="tower.id" class="col-md-3 col-12 lighter-color card m-4">
     <TowerCard :tower="tower"/>
   </div>
 </section>

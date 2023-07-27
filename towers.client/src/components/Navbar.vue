@@ -1,9 +1,10 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-black px-3">
+  <nav class="navbar navbar-expand-lg navbar-dark main-color px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
         <img alt="logo" src="https://images.unsplash.com/photo-1510855475067-adc50682ce27?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dG93ZXJ8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60" height="45" />
       </div>
+      <h1 class="text-light text-start ps-3">Towers</h1>
     </router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +20,7 @@
             About
           </router-link> -->
           
-      <h1 class="text-light text-start">Towers</h1>
+      
           
         </li>
         

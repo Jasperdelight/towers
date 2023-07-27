@@ -1,13 +1,13 @@
 <template>
-  <header>
+  <header class="main-color">
     <Navbar />
   </header>
-  <main>
+  <main class="light-color">
     <router-view />
     
   </main>
-   <footer class="bg-dark text-light">
-    Made with 💖 by CodeWorks
+   <footer class="main-color text-light">
+    
   </footer>
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -117,6 +117,21 @@ export default {
 
 :root{
   --main-height: calc(100vh - 32px - 64px);
+}
+.main-color{
+  background-color: #530c0b;
+}
+.secondary-color{
+  background-color: #54251d
+}
+.danger-color{
+  background-color: #ba7438
+}
+.light-color{
+  background-color: #c6b273
+}
+.lighter-color{
+  background-color: #c4c994
 }
 
 

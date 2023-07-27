@@ -112,6 +112,8 @@ export default {
     //   getTowerById()
     //   getTicketsByTowerId()
     // })
+
+    // TODO page update when canceled
     watchEffect(()=>{
       getTowerById()
       getTicketsByTowerId()
@@ -187,6 +189,7 @@ export default {
           return
         }
         await towersService.archiveTower(towerId)
+        getTowerById()
       } catch(error) {
           Pop.error(error.message);
           logger.log(error);

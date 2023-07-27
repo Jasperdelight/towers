@@ -9,7 +9,9 @@
         <div v-for="ticket in myTickets" :key="ticket.id" class="col-12 bg-secondary card mb-2">
           
         <div>
-          <img :src="ticket.event.coverImg" alt="">
+          <router-link :to="{ name: 'Tower', params: { eventId: ticket.event.id }}">
+            <img :src="ticket.event.coverImg" alt="">
+    </router-link>
           {{ ticket.event.name }}
           <button @click="unAttendTower()" class="btn btn-danger">Cancel</button>
         </div>
