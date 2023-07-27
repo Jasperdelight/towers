@@ -1,9 +1,9 @@
 <template>
 <div class="container">
-  <section v-if="activeTower" class="row bg-primary mt-4">
+  <section v-if="activeTower" class="row lighter-color mt-4 rounded">
     <div class="col-md-4 col-6">
-      <img v-if="activeTower.isCanceled == false" class="img-fluid" :src="activeTower.coverImg" alt="">
-      <img v-else class="img-fluid canceled-img" :src="activeTower.coverImg" alt="">
+      <img v-if="activeTower.isCanceled == false" class="img-fluid rounded mt-2" :src="activeTower.coverImg" alt="">
+      <img v-else class="img-fluid canceled-img rounded mt-2" :src="activeTower.coverImg" alt="">
       <div>Created At: {{ formatDate(activeTower.createdAt) }}</div>
     </div>
     <div class="col-md-8 col-6">
@@ -25,31 +25,33 @@
   </section>
 
   <h5  class="mb-0">Who's Going</h5>
-  <section class="row bg-secondary">
+  <section class="row secondary-color rounded">
     <div class="col-12 d-flex">
 
-      <div v-for="ticket in tickets" :key="ticket.id" class="">
+      <div v-for="ticket in tickets" :key="ticket.id" class="py-1">
       <img class="ticket-img" :src="ticket.profile.picture" :alt="ticket.profile.name" :title="ticket.profile.name">
     </div>
       </div>
   </section>
 
-  <section class="row" v-if="!activeTower?.isCanceled">
+  <section class="row justify-content-center" v-if="!activeTower?.isCanceled">
     <div class="col-md-10 col-12">
       <form @submit.prevent="createComment()">
         <label for="comment">Comments</label>
         <textarea required v-model="editable.body" class="form-control" name="comment" id="comment" rows="3"></textarea>
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-primary " type="submit">Post</button>
+        </div>
       </form>
     </div>
   </section>
 
-  <section class="row bg-dark">
+  <section class="row danger-color rounded">
     <div v-for="comment in comments" :key="comment.id" class="col-md-10 col-12">
       <section class="row">
-        <div class="col-md-4 col-6 d-flex justify-content-end">
-          <img class="img-fluid ticket-img" :src="comment.creator.picture" alt="">
-          <h5>{{ comment.creator.name }}</h5>
+        <div class="col-md-4 col-6 d-flex justify-content-end pt-2">
+          <img class="img-fluid ticket-img mt-2" :src="comment.creator.picture" alt="">
+          <h5 class="pt-2 ps-2">{{ comment.creator.name }}</h5>
         </div>
         <div class="col-md-8 col-6 bg-light elevation-4 my-2">
           

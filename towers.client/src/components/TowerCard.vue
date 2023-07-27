@@ -6,8 +6,8 @@
       <section class="row">
 
         <div class="col-12 pb-2">
-        <img v-if="tower.isCanceled == false" class="img-fluid img" :src="tower.coverImg" alt="">
-        <img v-if="tower.isCanceled == true" class="img-fluid img canceled-img" :src="tower.coverImg" alt="">
+        <img v-if="tower.isCanceled == false" class="img-fluid img rounded" :src="tower.coverImg" alt="">
+        <img v-if="tower.isCanceled == true" class="img-fluid img canceled-img rounded" :src="tower.coverImg" alt="">
       </div>
     </section>
     </router-link>
@@ -47,7 +47,7 @@ export default {
       width: 20vh;
       width: 100%;
       
-      object-fit: contain;
+      // object-fit: contain;
       object-position: center;
     }
 </style>

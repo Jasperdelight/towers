@@ -6,14 +6,17 @@
 
     <div class="container">
       <section class="row">
-        <div v-for="ticket in myTickets" :key="ticket.id" class="col-12 bg-secondary card mb-2">
+        <div v-for="ticket in myTickets" :key="ticket.id" class="col-12 danger-color card mb-2">
           
-        <div>
+        <div class="d-flex justify-content-between">
           <router-link :to="{ name: 'Tower', params: { eventId: ticket.event.id }}">
-            <img :src="ticket.event.coverImg" alt="">
+            <img class="py-1" :src="ticket.event.coverImg" alt="">
     </router-link>
-          {{ ticket.event.name }}
-          <button @click="unAttendTower()" class="btn btn-danger">Cancel</button>
+    <span class=" d-flex align-items-center">
+      {{ ticket.event.name }}
+    </span>
+          
+          <button @click="unAttendTower()" class="btn btn-danger my-3">Cancel</button>
         </div>
         </div>
       </section>
