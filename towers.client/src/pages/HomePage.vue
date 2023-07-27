@@ -1,20 +1,20 @@
 <template>
 <div class="container-fluid">
   <section class="row">
-  <div class="col-md-12"> Tower Tickets</div>
+  <div class="col-md-12"> </div>
 </section>
 <section class="row">
   
-  <div class="col-md-2 col-4" @click="filterBy = ''"><button>All</button></div>
-<div class="col-md-2 col-4" @click="filterBy = 'concert'" ><button>Concerts</button></div>
-<div class="col-md-2 col-4" @click="filterBy = 'convention'"><button>Conventions</button></div>
-<div class="col-md-2 col-4" @click="filterBy = 'digital'"><button>Digitals</button></div>
-<div class="col-md-2 col-4" @click="filterBy='sport'"><button>Sports</button></div>
-<div class="col-md-2 col-4" @click="filterBy ='misc'"><button>Misc</button></div>
+  <div class="col-md-2 col-4" @click="filterBy = ''"><button class="btn btn-info">All</button></div>
+<div class="col-md-2 col-4" @click="filterBy = 'concert'" ><button class="btn btn-info">Concerts</button></div>
+<div class="col-md-2 col-4" @click="filterBy = 'convention'"><button class="btn btn-info">Conventions</button></div>
+<div class="col-md-2 col-4" @click="filterBy = 'digital'"><button class="btn btn-info">Digitals</button></div>
+<div class="col-md-2 col-4" @click="filterBy='sport'"><button class="btn btn-info">Sports</button></div>
+<div class="col-md-2 col-4" @click="filterBy ='misc'"><button class="btn btn-info">Misc</button></div>
 </section>
 
-<section class="row">
-  <div v-for="tower in towers" :key="tower.id" class="col-md-3 col-12 bg-secondary pb-2">
+<section class="row justify-content-center">
+  <div v-for="tower in towers" :key="tower.id" class="col-md-3 col-12 bg-secondary card m-4">
     <TowerCard :tower="tower"/>
   </div>
 </section>
@@ -71,7 +71,7 @@ export default {
   .home-card {
     width: 50vw;
 
-    >img {
+    .img {
       height: 200px;
       max-width: 200px;
       width: 100%;

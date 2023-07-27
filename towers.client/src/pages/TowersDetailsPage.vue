@@ -1,19 +1,30 @@
 <template>
 <div class="container">
-  <section v-if="activeTower" class="row bg-primary">
+  <section v-if="activeTower" class="row bg-primary mt-4">
     <div class="col-md-4 col-6">
-      <img class="img-fluid" :src="activeTower.coverImg" alt="">
+      <img v-if="activeTower.isCanceled == false" class="img-fluid" :src="activeTower.coverImg" alt="">
+      <img v-else class="img-fluid canceled-img" :src="activeTower.coverImg" alt="">
+      <div>Created At: {{ formatDate(activeTower.createdAt) }}</div>
     </div>
     <div class="col-md-8 col-6">
-      <h2> {{activeTower.name}}</h2>
+      <h1 class="text-danger" v-if="activeTower.isCanceled == true">Canceled</h1>
+      <h2  > {{activeTower.name}}</h2>
       <p>{{activeTower.description}}</p>
-      <h4>Spots Left: {{ ticketsLeft}}</h4>
-      <button v-if="!isAttending" @click="attendTower()" class="btn btn-warning">Attend</button>
-      <button v-if="isAttending" @click="unAttendTower()" class="btn btn-danger">Cancel</button>
+      <p class="fs-4 text-danger" v-if="activeTower.isCanceled == true">Event is Canceled</p>
+      <h4 v-else >Spots Left: {{ ticketsLeft}}</h4>
+
+      <button v-if="!isAttending && activeTower.isCanceled == false && activeTower.capacity - activeTower.ticketCount != 0" @click="attendTower()" class="btn btn-warning">Attend</button>
+
+      <button disabled v-if="activeTower.capacity - activeTower.ticketCount === 0"  class="btn btn-warning">FULL</button>
+
+      <button v-if="isAttending && activeTower.isCanceled == false " @click="unAttendTower()" class="btn btn-danger">Cancel</button>
+      <div>Event Time: {{ formatDate(activeTower.startDate) }} </div> 
+
     </div>
+    <button v-if="account.id == activeTower.creatorId && activeTower.isCanceled == false" @click="archiveTower()" class="btn btn-danger"> Cancel Event</button>
   </section>
 
-  <h5 class="mb-0">Who's Going</h5>
+  <h5  class="mb-0">Who's Going</h5>
   <section class="row bg-secondary">
     <div class="col-12 d-flex">
 
@@ -23,7 +34,7 @@
       </div>
   </section>
 
-  <section class="row">
+  <section class="row" v-if="!activeTower?.isCanceled">
     <div class="col-md-10 col-12">
       <form @submit.prevent="createComment()">
         <label for="comment">Comments</label>
@@ -40,9 +51,10 @@
           <img class="img-fluid ticket-img" :src="comment.creator.picture" alt="">
           <h5>{{ comment.creator.name }}</h5>
         </div>
-        <div class="col-md-8 col-6 bg-light">
+        <div class="col-md-8 col-6 bg-light elevation-4 my-2">
           
           <p>{{ comment.body }}</p>
+          <button v-if="account.id == comment.creatorId " @click="deleteComment()" class="btn btn-danger">Delete</button>
         </div>
       </section>
     </div>
@@ -95,6 +107,7 @@ export default {
     }
 
 
+
     // onMounted(()=>{
     //   getTowerById()
     //   getTicketsByTowerId()
@@ -128,13 +141,23 @@ export default {
             logger.log(error);
         }
       },
+      async deleteComment(){
+  try{
+      const commentToDelete = AppState.comments.find(c => c.creatorId == AppState.account.id)
+      const commentToDeleteId = commentToDelete.id
+      await commentsService.deleteComment(commentToDeleteId)
+  } catch(error) {
+      Pop.error(error.message);
+      logger.log(error);
+  }
+},
       async attendTower(){
         try{
           const towerId = route.params.eventId
         const profileData = {}
         profileData.eventId = towerId
         await ticketsService.attendTower(profileData)
-        AppState.activeTower.ticketCount--
+        AppState.activeTower.ticketCount++
         } catch(error) {
             Pop.error(error.message);
             logger.log(error);
@@ -142,16 +165,43 @@ export default {
       },
       async unAttendTower(){
         try{
+          
             const ticketToRemove = AppState.tickets.find(t => t.accountId == AppState.account.id)
             const profileId = ticketToRemove.id
+            const wantsToDelete = await Pop.confirm('Are you sure you want to cancel your ticket to this event?')
+         if (!wantsToDelete) {
+          return
+        }
             await ticketsService.unAttendTower(profileId)
-            AppState.activeTower.ticketCount++
+            AppState.activeTower.ticketCount--
         } catch(error) {
             Pop.error(error.message);
             logger.log(error);
+        }},
+    
+    async archiveTower(){
+      try{
+        const towerId = route.params.eventId
+         const wantsToDelete = await Pop.confirm('Are you sure you want to cancel event?')
+         if (!wantsToDelete) {
+          return
         }
+        await towersService.archiveTower(towerId)
+      } catch(error) {
+          Pop.error(error.message);
+          logger.log(error);
       }
-    }
+    },
+    
+     formatDate(createdAt){
+        const date = new Date(createdAt)
+        const dateFormat = {
+          dateStyle: 'short',
+          timeStyle: 'short'
+        }
+        return date.toLocaleString(undefined, dateFormat)
+      }
+      }
   }
 }
 </script>
@@ -162,6 +212,14 @@ export default {
   height: 4vh;
   width: 4vh;
   border-radius: 50%;
+}
+
+.canceled-img{
+  -webkit-filter: grayscale(100%);
+       -moz-filter: grayscale(100%);
+         -o-filter: grayscale(100%);
+        -ms-filter: grayscale(100%);
+            filter: grayscale(100%);
 }
 
 </style>

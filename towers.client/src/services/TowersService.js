@@ -25,5 +25,11 @@ class TowersService {
     const tower = new Tower(res.data)
     return tower
   }
+
+  async archiveTower(towerId) {
+    const res = await api.delete(`api/events/${towerId}`)
+    logger.log('tower canceled', res.data)
+  }
+
 }
 export const towersService = new TowersService()
